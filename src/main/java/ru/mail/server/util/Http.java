@@ -3,7 +3,7 @@ package ru.mail.server.util;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Util {
+public class Http {
 
 	private static Set<String> ContentType = new HashSet<>();
 

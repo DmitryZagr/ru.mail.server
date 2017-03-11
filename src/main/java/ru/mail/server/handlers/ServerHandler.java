@@ -1,4 +1,4 @@
-package ru.mail.server;
+package ru.mail.server.handlers;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
