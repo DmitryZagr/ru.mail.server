@@ -5,7 +5,19 @@ import java.util.Set;
 
 public class Http {
 
-	private static Set<String> ContentType = new HashSet<>();
+	public static Set<String> ContentType = new HashSet<>();
+
+	public static enum Methods {
+		HEAD, GET;
+
+		public boolean isHEAD(Methods m) {
+			return m.equals(HEAD);
+		}
+
+		public boolean isGET(Methods m) {
+			return m.equals(GET);
+		}
+	}
 
 	static {
 		ContentType.add("text/html");

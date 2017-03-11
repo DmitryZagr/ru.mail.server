@@ -1,19 +1,24 @@
 package ru.mail.server.handlers;
+
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.SimpleChannelInboundHandler;
 
-public class ServerHandler extends ChannelInboundHandlerAdapter {
+public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
-  @Override
-  public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-//    ts.setRecvTimeStamp(System.nanoTime());
-    System.out.println((String)msg);
-  }
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		// Close the connection when an exception is raised.
+		cause.printStackTrace();
+		ctx.close();
+	}
 
-  @Override
-  public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-    // Close the connection when an exception is raised.
-    cause.printStackTrace();
-    ctx.close();
-  }
+	@Override
+	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(msg);
+		msg = "HTTP/1.1 200 OK\n\r" + "Connection: Closed";
+		ctx.writeAndFlush(Unpooled.copiedBuffer(msg.getBytes()));
+	}
 }

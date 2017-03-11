@@ -12,7 +12,6 @@ import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
 import ru.mail.server.handlers.ServerHandler;
 
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,6 +74,7 @@ public class NettyServer {
 			protected void initChannel(SocketChannel ch) throws Exception {
 				ChannelPipeline pipeline = ch.pipeline();
 				pipeline.addLast("stringDecoder", new StringDecoder());
+				// pipeline.addLast("stringEncoder", new StringEncoder());
 
 				// ===========================================================
 				// 2. run handler with slow business logic
