@@ -38,12 +38,12 @@ public class HttpRequest {
 
 		private void parseHttp(String httpRequest) {
 
-			if (StringUtils.isEmpty(httpRequest)) {
+			if (StringUtils.isEmpty(httpRequest) || !httpRequest.contains("HTTP")) {
 				isValid = false;
 				return;
 			}
 
-			httpRequest = httpRequest.split(System.getProperty("line.separator"))[0];
+			httpRequest = httpRequest.substring(0, httpRequest.indexOf("HTTP") + "HTTP/1.1".length());
 
 			this.methodName = httpRequest.substring(0, httpRequest.indexOf(" "));
 
@@ -52,15 +52,11 @@ public class HttpRequest {
 				return;
 			}
 
-			if (!httpRequest.contains("HTTP")) {
-				isValid = false;
-				return;
-			}
 			this.path = httpRequest.substring(methodName.length() + 1, httpRequest.indexOf("HTTP") - 1);
 			if (path.contains("?"))
 				this.path = path.substring(0, this.path.indexOf('?'));
 
-			this.httpVersion = httpRequest.substring(path.length() + methodName.length() + 2, httpRequest.length() - 1);
+			this.httpVersion = httpRequest.substring(path.length() + methodName.length() + 2, httpRequest.length());
 
 			String[] split = httpVersion.split(" ");
 

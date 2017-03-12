@@ -10,8 +10,6 @@ public class IOUtil {
 	private boolean valid;
 
 	public IOUtil(String documentRoot, String childPath) {
-//		if (!validateChildPath(childPath))
-//			return;
 		file = new File(documentRoot + childPath);
 	}
 
@@ -36,14 +34,5 @@ public class IOUtil {
 	public File getFile() {
 		return file;
 	}
-
-//	private boolean validateChildPath(String childPath) {
-//		if (childPath.contains("..")) {
-//			valid = false;
-//			return false;
-//		}
-//		valid = true;
-//		return true;
-//	}
 
 }

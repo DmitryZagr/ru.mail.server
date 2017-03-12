@@ -15,6 +15,7 @@ public class HttpHeaders {
 	private final static String CONTENT_TYPE = "Content-Type:";
 
 	public final static String CONNECTION_CLOSE = " Close";
+	public final static String KeepAlive = " Keep-Alive";
 
 	private StringBuilder headers;
 

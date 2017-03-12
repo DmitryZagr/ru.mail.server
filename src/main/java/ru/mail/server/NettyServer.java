@@ -103,7 +103,7 @@ public class NettyServer {
 			}
 		});
 
-		bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);
+		bootstrap.childOption(ChannelOption.SO_KEEPALIVE, true).childOption(ChannelOption.TCP_NODELAY, true);
 
 		StringBuilder msg = new StringBuilder();
 		msg.append(TAG).append("Netty Server bind to port: ").append(port).append(",\n").append("root dir: ")

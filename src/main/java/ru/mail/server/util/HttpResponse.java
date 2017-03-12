@@ -20,6 +20,7 @@ public class HttpResponse {
 	private FileInputStream fis;
 	private long fileLenght;
 	private String method;
+	File file;
 
 	public static class HttpResponseBuilder {
 		private HttpRequest request;
@@ -70,7 +71,7 @@ public class HttpResponse {
 
 		IOUtil ioutil = new IOUtil(NettyServer.getServerConfigByName("NettyServer").getRootDir(), childPath);
 
-		File file = ioutil.getFile();
+		file = ioutil.getFile();
 
 
 		if (!file.exists() ) {
@@ -96,6 +97,10 @@ public class HttpResponse {
 
 	}
 
+	public File getFile() {
+		return file;
+	}
+
 	public FileInputStream getFileInputStream() {
 		return this.fis;
 	}
@@ -103,7 +108,7 @@ public class HttpResponse {
 	private void OK() {
 		httpHeaders = new HttpHeaders.HttpHeadersBuilder().code(ResponceCode.OK)
 				.contentType(HttpUtil.getContentType(request.getFileExtension()))
-				.contentLenght(Long.toString(fileLenght)).connection(HttpHeaders.CONNECTION_CLOSE).build();
+				.contentLenght(Long.toString(fileLenght)).connection(HttpHeaders.KeepAlive).build();
 	}
 
 	private void invalidRequest() {

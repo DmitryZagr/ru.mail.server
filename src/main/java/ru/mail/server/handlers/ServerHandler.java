@@ -31,7 +31,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 		HttpResponse httpResponse = new HttpResponse.HttpResponseBuilder().httpRequest(request).build();
 
 		String h = httpResponse.getHttpHeaders().getHttpHeaders().toString();
-		System.out.println(h);
 
 
 		ctx.write(Unpooled.copiedBuffer(h.getBytes()));
@@ -42,6 +41,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 			future = ctx.writeAndFlush(new DefaultFileRegion(is.getChannel(), 0, httpResponse.getFileLenght()));
 
 			future.addListener(ChannelFutureListener.CLOSE);
+//			ctx.close();
 		} else {
 			ctx.flush();
 			ctx.close();
