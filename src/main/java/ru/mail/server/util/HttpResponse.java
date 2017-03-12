@@ -5,8 +5,8 @@ public class HttpResponse {
 
 	public static class HttpResponceBuilder {
 
-//		public HttpResponse build(HttpRequest httpRequest) {
-//			return null;
-//		}
+		// public HttpResponse build(HttpRequest httpRequest) {
+		// return null;
+		// }
 	}
 }

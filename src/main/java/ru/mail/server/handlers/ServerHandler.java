@@ -17,14 +17,9 @@ public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, HttpRequest msg) throws Exception {
-		// TODO Auto-generated method stub
-
-		HttpHeaders headers = new HttpHeaders.HttpHeadersBuilder().connection("Closed")
-				.contentLenght(Integer.toString(0)).build(404);
-		// msg = "HTTP/1.1 200 OK\n\r" + "Connection: Closed";
+		HttpHeaders headers = new HttpHeaders.HttpHeadersBuilder().code(404).connection("Closed").build();
 		String h = headers.getHttpHeaders().toString();
 		System.out.println(h);
-		ctx.write(Unpooled.copiedBuffer(h.getBytes()));
 		ctx.writeAndFlush(Unpooled.copiedBuffer(h.getBytes()));
 		ctx.close();
 	}

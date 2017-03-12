@@ -34,7 +34,7 @@ public class HttpRequest {
 
 		private void parseHttp(String httpRequest) {
 
-			if(StringUtils.isEmpty(httpRequest)) {
+			if (StringUtils.isEmpty(httpRequest)) {
 				isValid = false;
 				return;
 			}
@@ -43,7 +43,7 @@ public class HttpRequest {
 
 			this.methodName = httpRequest.substring(0, httpRequest.indexOf(" "));
 
-			if(Method.getMethodName(this.methodName) == null) {
+			if (Method.getMethodName(this.methodName) == null) {
 				isValid = false;
 				return;
 			}
@@ -52,11 +52,11 @@ public class HttpRequest {
 				isValid = false;
 				return;
 			}
-			this.path = httpRequest.substring(methodName.length() + 1, httpRequest.indexOf("HTTP") - 1 );
+			this.path = httpRequest.substring(methodName.length() + 1, httpRequest.indexOf("HTTP") - 1);
 
 			this.httpVersion = httpRequest.substring(path.length() + methodName.length() + 2, httpRequest.length() - 1);
 
-			if(!httpVersion.equals("HTTP/1.1")) {
+			if (!httpVersion.equals("HTTP/1.1")) {
 				isValid = false;
 				return;
 			}
@@ -68,13 +68,12 @@ public class HttpRequest {
 		private void getFileExtension() {
 			String[] split = this.path.split("\\.");
 
-			if(split == null || split.length == 0 || split.length == 1) {
+			if (split == null || split.length == 0 || split.length == 1) {
 				this.fileExtension = null;
 				return;
 			}
 
-
-			this.fileExtension = "." + split[split.length - 1 ];
+			this.fileExtension = "." + split[split.length - 1];
 		}
 	}
 

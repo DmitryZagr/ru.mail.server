@@ -27,16 +27,21 @@ public class HttpHeaders {
 		private StringBuilder headers = new StringBuilder();
 		private String codeStatus = "HTTP/1.1 {code} {message}\n\r";
 
-		public HttpHeaders build(int codeStatus) {
-
-			setCode(codeStatus);
-			setCommonHttpHeaders();
-
-			headers.append("\n\r");
+		public HttpHeaders build() {
 
 			HttpHeaders httpHeaders = new HttpHeaders(headers);
 
+			headers.append("\n\r");
+
 			return httpHeaders;
+		}
+
+		public HttpHeadersBuilder code(int codeStatus) {
+			this.codeStatus = this.codeStatus.replaceAll("\\{code\\}", Integer.toString(codeStatus))
+					.replaceAll("\\{message\\}", codeDescription.get(codeStatus));
+			headers.append(this.codeStatus);
+			setCommonHttpHeaders();
+			return this;
 		}
 
 		public HttpHeadersBuilder connection(String connection) {
@@ -52,12 +57,6 @@ public class HttpHeaders {
 		public HttpHeadersBuilder contentLenght(String contentLenght) {
 			headers.append(CONTENT_LENGHT).append(" ").append(contentLenght).append("\n\r");
 			return this;
-		}
-
-		private void setCode(int codeStatus) {
-			this.codeStatus = this.codeStatus.replaceAll("\\{code\\}", Integer.toString(codeStatus))
-					.replaceAll("\\{message\\}", codeDescription.get(codeStatus));
-			headers.append(this.codeStatus);
 		}
 
 		private void setCommonHttpHeaders() {
