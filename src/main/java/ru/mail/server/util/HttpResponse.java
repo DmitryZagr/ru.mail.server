@@ -54,7 +54,7 @@ public class HttpResponse {
 		String childPath = request.getPath();
 
 		if (request.getFileExtension() == null) {
-			if (!(childPath.charAt(childPath.length() - 1) == '/'))
+			if ((childPath.charAt(childPath.length() - 1) != '/'))
 				childPath += "/";
 			childPath += INDEX;
 			request.setFileExtension(FilenameUtils.getExtension(childPath));
@@ -73,7 +73,7 @@ public class HttpResponse {
 		File file = ioutil.getFile();
 
 
-		if (!file.exists()) {
+		if (!file.exists() ) {
 			if(childPath.contains(INDEX)) {
 				forbidden();
 				return null;

@@ -1,5 +1,9 @@
 package ru.mail.server.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import ru.mail.server.util.HttpUtil.Method;
@@ -60,11 +64,11 @@ public class HttpRequest {
 
 			String[] split = httpVersion.split(" ");
 
-			if(split.length > 1) {
+			if (split.length > 1) {
 				httpVersion = split[1];
 			}
 
-			if (!httpVersion.equals("HTTP/1.1")) {
+			if (!httpVersion.equals("HTTP/1.0") && !httpVersion.equals("HTTP/1.1")) {
 				isValid = false;
 				return;
 			}
@@ -74,26 +78,17 @@ public class HttpRequest {
 		}
 
 		private void getFileExtension() {
-			String[] split = this.path.split("\\.");
-
-			if (split == null || split.length == 0 || split.length == 1) {
-				this.fileExtension = null;
-				return;
+			try {
+				this.fileExtension = FilenameUtils.getExtension(URLDecoder.decode(this.path, "UTF-8"));
+				if (this.fileExtension.equals(""))
+					this.fileExtension = null;
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			this.fileExtension = split[split.length - 1];
-
-			this.isValid = isValidExtention();
-		}
-
-		private boolean isValidExtention() {
-
-			if (HttpUtil.getContentType(fileExtension) == null)
-				return false;
-
-			return true;
 		}
 	}
+
 
 	public String getMethodName() {
 		return methodName;
