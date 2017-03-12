@@ -74,6 +74,10 @@ public class HttpResponse {
 
 
 		if (!file.exists()) {
+			if(childPath.contains(INDEX)) {
+				forbidden();
+				return null;
+			}
 			notFound();
 			return null;
 		}
@@ -112,8 +116,14 @@ public class HttpResponse {
 				.connection(HttpHeaders.CONNECTION_CLOSE).build();
 	}
 
+	private void forbidden() {
+		httpHeaders = new HttpHeaders.HttpHeadersBuilder().code(ResponceCode.FORBIDDEN)
+				.connection(HttpHeaders.CONNECTION_CLOSE).build();
+	}
+
 	private static class ResponceCode {
 		static final int OK = 200;
+		static final int FORBIDDEN = 403;
 		static final int NOT_FOUND = 404;
 		static final int NOT_ALLOWED = 405;
 	}
