@@ -18,14 +18,8 @@ public class HttpUtil {
 		ContentType.put(".swf", "application/x-shockwave-flash");
 	}
 
-	public String getContentType(String expansion) {
+	public static String getContentType(String expansion) {
 		return ContentType.get(expansion);
-	}
-
-	public static class ResponceCode {
-		public static final int OK = 200;
-		public static final int NOT_FOUND = 404;
-		public static final int NOT_ALLOWED = 405;
 	}
 
 	public static enum Method {
@@ -45,11 +39,6 @@ public class HttpUtil {
 			return null;
 		}
 
-//		public static boolean methodIsAllowed(String m) {
-//			if (HEAD.toString().equals(m) || GET.toString().equals(m))
-//				return true;
-//			return false;
-//		}
 	}
 
 }

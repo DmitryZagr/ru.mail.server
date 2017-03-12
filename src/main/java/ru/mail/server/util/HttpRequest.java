@@ -74,6 +74,16 @@ public class HttpRequest {
 			}
 
 			this.fileExtension = "." + split[split.length - 1];
+
+			this.isValid = isValidExtention();
+		}
+
+		private boolean isValidExtention() {
+
+			if (HttpUtil.getContentType(fileExtension) == null)
+				return false;
+
+			return true;
 		}
 	}
 

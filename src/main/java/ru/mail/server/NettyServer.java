@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 public class NettyServer {
 
-	public static Map<String, ServerConfig> serversConfigs = new HashMap<>();
+	private static Map<String, ServerConfig> serversConfigs = new HashMap<>();
 
 	private static Logger log = Logger.getLogger(NettyServer.class.getName());
 	private static String TAG = NettyServer.class.getName() + ": ";
@@ -60,6 +60,10 @@ public class NettyServer {
 		public NettyServer build() {
 			return new NettyServer(port, rootDir, countOfThreads, serverName);
 		}
+	}
+
+	public static ServerConfig getServerConfigByName(String name) {
+		return serversConfigs.get(name);
 	}
 
 	private NettyServer(int port, String rootDir, int countOfThreads, String serverName) {
@@ -119,7 +123,7 @@ public class NettyServer {
 		private int port;
 		private String rootDir;
 
-		public ServerConfig(int port, String rootDir) {
+		private ServerConfig(int port, String rootDir) {
 			this.port = port;
 			this.rootDir = rootDir;
 		}
