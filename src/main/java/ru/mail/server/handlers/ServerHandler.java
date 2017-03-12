@@ -2,10 +2,10 @@ package ru.mail.server.handlers;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
+import ru.mail.server.util.HttpRequest;
 
-public class ServerHandler extends SimpleChannelInboundHandler<String> {
+public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
@@ -15,10 +15,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
 	}
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+	protected void channelRead0(ChannelHandlerContext ctx, HttpRequest msg) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(msg);
-		msg = "HTTP/1.1 200 OK\n\r" + "Connection: Closed";
-		ctx.writeAndFlush(Unpooled.copiedBuffer(msg.getBytes()));
+//		msg = "HTTP/1.1 200 OK\n\r" + "Connection: Closed";
+//		ctx.writeAndFlush(Unpooled.copiedBuffer(msg.getBytes()));
 	}
 }

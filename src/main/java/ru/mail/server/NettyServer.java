@@ -10,12 +10,17 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
+import ru.mail.server.handlers.HttpParaserHandler;
 import ru.mail.server.handlers.ServerHandler;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class NettyServer {
+
+	public static Map<String, ServerConfig> serversConfigs = new HashMap<>();
 
 	private static Logger log = Logger.getLogger(NettyServer.class.getName());
 	private static String TAG = NettyServer.class.getName() + ": ";
@@ -23,12 +28,14 @@ public class NettyServer {
 	private int port = 8080;
 	private String rootDir = System.getProperty("java.io.tmpdir");
 	private int countOfThreads = Runtime.getRuntime().availableProcessors();
+	private String serverName;
 
 	public static class NettyServerBuilder {
 
 		private int port = 8080;
 		private String rootDir = System.getProperty("java.io.tmpdir");
 		private int countOfThreads = Runtime.getRuntime().availableProcessors();
+		private String serverName = "NettyServer";
 
 		public NettyServerBuilder port(int port) {
 			this.port = port;
@@ -45,20 +52,27 @@ public class NettyServer {
 			return this;
 		}
 
+		public NettyServerBuilder serverName(String serverName) {
+			this.serverName = serverName;
+			return this;
+		}
+
 		public NettyServer build() {
-			return new NettyServer(port, rootDir, countOfThreads);
+			return new NettyServer(port, rootDir, countOfThreads, serverName);
 		}
 	}
 
-	private NettyServer(int port, String rootDir, int countOfThreads) {
+	private NettyServer(int port, String rootDir, int countOfThreads, String serverName) {
 		this.port = port;
 		this.rootDir = rootDir;
 		this.countOfThreads = countOfThreads;
+		this.serverName = serverName;
+		serversConfigs.put(serverName, new ServerConfig(port, rootDir));
 	}
 
 	public void start() {
 		NioEventLoopGroup boosGroup = new NioEventLoopGroup();
-		NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+		NioEventLoopGroup workerGroup = new NioEventLoopGroup(this.countOfThreads);
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		bootstrap.group(boosGroup, workerGroup);
 		bootstrap.channel(NioServerSocketChannel.class);
@@ -74,6 +88,7 @@ public class NettyServer {
 			protected void initChannel(SocketChannel ch) throws Exception {
 				ChannelPipeline pipeline = ch.pipeline();
 				pipeline.addLast("stringDecoder", new StringDecoder());
+				pipeline.addLast("httpParaser", new HttpParaserHandler());
 				// pipeline.addLast("stringEncoder", new StringEncoder());
 
 				// ===========================================================
@@ -98,4 +113,25 @@ public class NettyServer {
 			e.printStackTrace();
 		}
 	}
+
+	public static final class ServerConfig {
+
+		private int port;
+		private String rootDir;
+
+		public ServerConfig(int port, String rootDir) {
+			this.port = port;
+			this.rootDir = rootDir;
+		}
+
+		public int getPort() {
+			return port;
+		}
+
+		public String getRootDir() {
+			return rootDir;
+		}
+
+	}
+
 }
