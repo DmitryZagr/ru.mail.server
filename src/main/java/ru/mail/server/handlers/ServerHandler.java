@@ -30,11 +30,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
 		HttpResponse httpResponse = new HttpResponse.HttpResponseBuilder().httpRequest(request).build();
 
-		// HttpHeaders headers = new
-		// HttpHeaders.HttpHeadersBuilder().code(404).connection("Closed").build();
-		// String h = headers.getHttpHeaders().toString();
-		// System.out.println(h);
-
 		String h = httpResponse.getHttpHeaders().getHttpHeaders().toString();
 		System.out.println(h);
 
@@ -42,7 +37,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 		ctx.write(Unpooled.copiedBuffer(h.getBytes()));
 
 		final FileInputStream is = httpResponse.getFileInputStream();
-		if (is != null) {
+		if (is != null && !httpResponse.getMethodName().equals("HEAD")) {
 			ChannelFuture future;
 			future = ctx.writeAndFlush(new DefaultFileRegion(is.getChannel(), 0, httpResponse.getFileLenght()));
 

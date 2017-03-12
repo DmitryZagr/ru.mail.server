@@ -19,6 +19,7 @@ public class HttpResponse {
 	private static final String INDEX = "index.html";
 	private FileInputStream fis;
 	private long fileLenght;
+	private String method;
 
 	public static class HttpResponseBuilder {
 		private HttpRequest request;
@@ -31,6 +32,7 @@ public class HttpResponse {
 		public HttpResponse build() {
 			HttpResponse httpResp = new HttpResponse();
 			httpResp.request = request;
+			httpResp.method = request.getMethodName();
 			httpResp.build();
 			return httpResp;
 		}
@@ -44,7 +46,7 @@ public class HttpResponse {
 		}
 
 		openFileInputStream();
-
+		request = null;
 	}
 
 	private FileInputStream openFileInputStream() {
@@ -122,6 +124,10 @@ public class HttpResponse {
 
 	public long getFileLenght() {
 		return fileLenght;
+	}
+
+	public String getMethodName() {
+		return this.method;
 	}
 
 }

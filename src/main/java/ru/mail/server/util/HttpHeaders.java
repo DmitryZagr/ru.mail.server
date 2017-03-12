@@ -20,6 +20,7 @@ public class HttpHeaders {
 
 	static {
 		codeDescription.put(200, "OK");
+		codeDescription.put(403, "Forbidden");
 		codeDescription.put(404, "Not Found");
 		codeDescription.put(405, "Method Not Allowed");
 	}
@@ -27,13 +28,13 @@ public class HttpHeaders {
 	public static class HttpHeadersBuilder {
 
 		private StringBuilder headers = new StringBuilder();
-		private String codeStatus = "HTTP/1.1 {code} {message}\n";
+		private String codeStatus = "HTTP/1.1 {code} {message}\r\n";
 
 		public HttpHeaders build() {
 
 			HttpHeaders httpHeaders = new HttpHeaders(headers);
 
-			headers.append("\n");
+			headers.append("\r\n");
 
 			return httpHeaders;
 		}
@@ -52,22 +53,22 @@ public class HttpHeaders {
 		}
 
 		public HttpHeadersBuilder contentType(String contentType) {
-			headers.append(CONTENT_TYPE).append(" ").append(contentType).append("\n");
+			headers.append(CONTENT_TYPE).append(" ").append(contentType).append("\r\n");
 			return this;
 		}
 
 		public HttpHeadersBuilder contentLenght(String contentLenght) {
-			headers.append(CONTENT_LENGHT).append(" ").append(contentLenght).append("\n");
+			headers.append(CONTENT_LENGHT).append(" ").append(contentLenght).append("\r\n");
 			return this;
 		}
 
 		private void setCommonHttpHeaders() {
-			headers.append(SERVER_NAME).append(" NettyServer\n").append(DATE).append(" ")
-					.append(Calendar.getInstance().getTime().toString()).append("\n");
+			headers.append(SERVER_NAME).append(" NettyServer\r\n").append(DATE).append(" ")
+					.append(Calendar.getInstance().getTime().toString()).append("\r\n");
 		}
 
 		private void setConnection(String connection) {
-			headers.append(CONNECTION).append(" " + connection + "\n");
+			headers.append(CONNECTION).append(" " + connection + "\r\n");
 		}
 
 	}
