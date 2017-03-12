@@ -53,8 +53,16 @@ public class HttpRequest {
 				return;
 			}
 			this.path = httpRequest.substring(methodName.length() + 1, httpRequest.indexOf("HTTP") - 1);
+			if (path.contains("?"))
+				this.path = path.substring(0, this.path.indexOf('?'));
 
 			this.httpVersion = httpRequest.substring(path.length() + methodName.length() + 2, httpRequest.length() - 1);
+
+			String[] split = httpVersion.split(" ");
+
+			if(split.length > 1) {
+				httpVersion = split[1];
+			}
 
 			if (!httpVersion.equals("HTTP/1.1")) {
 				isValid = false;
@@ -73,7 +81,7 @@ public class HttpRequest {
 				return;
 			}
 
-			this.fileExtension = "." + split[split.length - 1];
+			this.fileExtension = split[split.length - 1];
 
 			this.isValid = isValidExtention();
 		}

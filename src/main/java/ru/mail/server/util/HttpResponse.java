@@ -3,6 +3,12 @@ package ru.mail.server.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+
+import org.apache.commons.io.FilenameUtils;
 
 import ru.mail.file.IOUtil;
 import ru.mail.server.NettyServer;
@@ -49,11 +55,21 @@ public class HttpResponse {
 			if (!(childPath.charAt(childPath.length() - 1) == '/'))
 				childPath += "/";
 			childPath += INDEX;
+			request.setFileExtension(FilenameUtils.getExtension(childPath));
 		}
+
+		try {
+			childPath = URLDecoder.decode(childPath, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 
 		IOUtil ioutil = new IOUtil(NettyServer.getServerConfigByName("NettyServer").getRootDir(), childPath);
 
 		File file = ioutil.getFile();
+
 
 		if (!file.exists()) {
 			notFound();
@@ -81,15 +97,17 @@ public class HttpResponse {
 	private void OK() {
 		httpHeaders = new HttpHeaders.HttpHeadersBuilder().code(ResponceCode.OK)
 				.contentType(HttpUtil.getContentType(request.getFileExtension()))
-				.contentLenght(Long.toString(fileLenght)).build();
+				.contentLenght(Long.toString(fileLenght)).connection(HttpHeaders.CONNECTION_CLOSE).build();
 	}
 
 	private void invalidRequest() {
-		httpHeaders = new HttpHeaders.HttpHeadersBuilder().code(ResponceCode.NOT_ALLOWED).build();
+		httpHeaders = new HttpHeaders.HttpHeadersBuilder().code(ResponceCode.NOT_ALLOWED)
+				.connection(HttpHeaders.CONNECTION_CLOSE).build();
 	}
 
 	private void notFound() {
-		httpHeaders = new HttpHeaders.HttpHeadersBuilder().code(ResponceCode.NOT_FOUND).build();
+		httpHeaders = new HttpHeaders.HttpHeadersBuilder().code(ResponceCode.NOT_FOUND)
+				.connection(HttpHeaders.CONNECTION_CLOSE).build();
 	}
 
 	private static class ResponceCode {
@@ -100,6 +118,10 @@ public class HttpResponse {
 
 	public HttpHeaders getHttpHeaders() {
 		return httpHeaders;
+	}
+
+	public long getFileLenght() {
+		return fileLenght;
 	}
 
 }

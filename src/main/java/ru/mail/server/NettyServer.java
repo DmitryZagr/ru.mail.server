@@ -25,14 +25,14 @@ public class NettyServer {
 	private static Logger log = Logger.getLogger(NettyServer.class.getName());
 	private static String TAG = NettyServer.class.getName() + ": ";
 
-	private int port = 8080;
+	private int port = 80;
 	private String rootDir = System.getProperty("java.io.tmpdir");
 	private int countOfThreads = Runtime.getRuntime().availableProcessors();
 	private String serverName;
 
 	public static class NettyServerBuilder {
 
-		private int port = 8080;
+		private int port = 80;
 		private String rootDir = System.getProperty("java.io.tmpdir");
 		private int countOfThreads = Runtime.getRuntime().availableProcessors();
 		private String serverName = "NettyServer";

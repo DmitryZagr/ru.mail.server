@@ -14,6 +14,8 @@ public class HttpHeaders {
 	private final static String CONTENT_LENGHT = "Content-Length:";
 	private final static String CONTENT_TYPE = "Content-Type:";
 
+	public final static String CONNECTION_CLOSE = " Close";
+
 	private StringBuilder headers;
 
 	static {
@@ -25,13 +27,13 @@ public class HttpHeaders {
 	public static class HttpHeadersBuilder {
 
 		private StringBuilder headers = new StringBuilder();
-		private String codeStatus = "HTTP/1.1 {code} {message}\n\r";
+		private String codeStatus = "HTTP/1.1 {code} {message}\n";
 
 		public HttpHeaders build() {
 
 			HttpHeaders httpHeaders = new HttpHeaders(headers);
 
-			headers.append("\n\r");
+			headers.append("\n");
 
 			return httpHeaders;
 		}
@@ -50,22 +52,22 @@ public class HttpHeaders {
 		}
 
 		public HttpHeadersBuilder contentType(String contentType) {
-			headers.append(CONTENT_TYPE).append(" ").append(contentType).append("\n\r");
+			headers.append(CONTENT_TYPE).append(" ").append(contentType).append("\n");
 			return this;
 		}
 
 		public HttpHeadersBuilder contentLenght(String contentLenght) {
-			headers.append(CONTENT_LENGHT).append(" ").append(contentLenght).append("\n\r");
+			headers.append(CONTENT_LENGHT).append(" ").append(contentLenght).append("\n");
 			return this;
 		}
 
 		private void setCommonHttpHeaders() {
-			headers.append(SERVER_NAME).append(" NettyServer\n\r").append(DATE).append(" ")
-					.append(Calendar.getInstance().getTime().toString()).append("\n\r");
+			headers.append(SERVER_NAME).append(" NettyServer\n").append(DATE).append(" ")
+					.append(Calendar.getInstance().getTime().toString()).append("\n");
 		}
 
 		private void setConnection(String connection) {
-			headers.append(CONNECTION).append(" " + connection + "\n\r");
+			headers.append(CONNECTION).append(" " + connection + "\n");
 		}
 
 	}

@@ -8,14 +8,15 @@ public class HttpUtil {
 	private static final Map<String, String> ContentType = new HashMap<>();
 
 	static {
-		ContentType.put(".html", "text/html");
-		ContentType.put(".css", "text/css");
-		ContentType.put(".js", "text/javascript");
-		ContentType.put(".jpg", "image/jpg");
-		ContentType.put(".jpeg", "image/jpeg");
-		ContentType.put(".png", "image/png");
-		ContentType.put(".gif", "image/gif");
-		ContentType.put(".swf", "application/x-shockwave-flash");
+		ContentType.put("html", "text/html");
+		ContentType.put("css", "text/css");
+		ContentType.put("js", "text/javascript");
+		ContentType.put("jpg", "image/jpeg");
+		ContentType.put("jpeg", "image/jpeg");
+		ContentType.put("png", "image/png");
+		ContentType.put("gif", "image/gif");
+		ContentType.put("swf", "application/x-shockwave-flash");
+		ContentType.put("txt", "text/plain");
 	}
 
 	public static String getContentType(String expansion) {

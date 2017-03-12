@@ -6,7 +6,7 @@ public class App {
 
 	public static void main(String[] args) {
 		NettyServer server = new NettyServer.NettyServerBuilder().port(8080).threads(4)
-				.rootDir("/Users/admin/Work/MailRu/3_semester/HighLoad/ROOT").build();
+				.rootDir("/Users/admin/Work/MailRu/3_semester/HighLoad/ROOT/http-test-suite").build();
 		server.start();
 	}
 
