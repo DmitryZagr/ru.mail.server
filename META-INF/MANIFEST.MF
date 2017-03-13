@@ -1,1 +1,0 @@
-Main-Class: ru.mail.application.App
