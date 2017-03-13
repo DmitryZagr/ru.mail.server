@@ -1,12 +1,17 @@
 package ru.mail.application;
 
+import ru.mail.application.util.ParseCmd;
 import ru.mail.server.NettyServer;
 
 public class App {
 
 	public static void main(String[] args) {
-		NettyServer server = new NettyServer.NettyServerBuilder().port(8080).threads(4)
-				.rootDir("/Users/admin/Work/MailRu/3_semester/HighLoad/ROOT/http-test-suite").build();
+
+		ParseCmd parser = new ParseCmd();
+		parser.parse(args);
+
+		NettyServer server = new NettyServer.NettyServerBuilder().port(parser.getPort())
+				.threads(parser.getCountOfThreads()).rootDir(parser.getRootDir()).build();
 		server.start();
 	}
 
