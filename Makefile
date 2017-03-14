@@ -1,13 +1,10 @@
-all: jar mv  cp
+all: jar mv
 
 jar:
 	@mvn  clean package
 
 mv:
-	@mv ./target/httpd.jar ./target/httpd
-
-cp:
-	@cp ./target/httpd ./httpd
+	@mv ./target/httpd.jar ./httpd
 
 clean: rm_http  mvn_clean
 
