@@ -23,7 +23,7 @@ To compile NettyServer from source, you need a Java compiler supporting Java 1.8
 You can compile EqualizerFX with [Maven](https://maven.apache.org/index.html).
 
 ```sh
-$ https://github.com/DmitryZagr/ru.mail.server.git
+$ git clone https://github.com/DmitryZagr/ru.mail.server.git
 $ cd ru.mail.server
 $ make
 $ java -jar httpd -p <port> -c <threads> -r <document_root>
