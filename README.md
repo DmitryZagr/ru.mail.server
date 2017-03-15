@@ -35,7 +35,7 @@ $ java -jar httpd -p <port> -c <threads> -r <document_root>
 ```sh
 $ make
 ```
-  - In docker-compose.yml file  specify the host-port and folder whith  static files.
+  - In docker-compose.yml file  specify the host-port and folder with static files.
   - Running
  ```sh
 $ docker-compose up
