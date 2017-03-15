@@ -1,6 +1,6 @@
 # NettyServer
 
-Equalizer based on [Java 8](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm).
+Server based on [Java 8](http://docs.oracle.com/javase/8/javase-clienttechnologies.htm).
 
 
 ## New Features!
