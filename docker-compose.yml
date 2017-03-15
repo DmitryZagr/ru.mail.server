@@ -1,0 +1,9 @@
+version: '2'
+services:
+  web_netty_server:
+    build: .
+    image: "netty:latest"
+    ports:
+     - "8080:80"
+    volumes:
+     - ./static/http-test-suite:/home/1C_corp/static

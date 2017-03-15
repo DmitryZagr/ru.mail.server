@@ -5,6 +5,7 @@ Equalizer based on [Java 8](http://docs.oracle.com/javase/8/javase-clienttechnol
 
 ## New Features!
   - Added maven assembly.
+  - Added Docker support.
 
 ## Installing and Running
 
@@ -27,4 +28,15 @@ $ git clone https://github.com/DmitryZagr/ru.mail.server.git
 $ cd ru.mail.server
 $ make
 $ java -jar httpd -p <port> -c <threads> -r <document_root>
+```
+#### Running in Docker
+
+   - Build with make.
+```sh
+$ make
+```
+  - In docker-compose.yml file  specify the host-port and folder whith  static files.
+  - Running
+ ```sh
+$ docker-compose up
 ```
