@@ -1,6 +1,6 @@
 FROM lwieske/java-8:latest
 
-ARG home_dir=/home/1C_corp
+ARG home_dir=/home/mail
 
 CMD mkdir ${home_dir}
 WORKDIR ${home_dir}
@@ -12,4 +12,4 @@ ADD ./target/ ${home_dir}/bin
 VOLUME ${home_dir}/static
 EXPOSE 80
 
-CMD java -jar ./bin/httpd.jar -p 80 -r ${home_dir}/static
+CMD java -jar $(pwd)/bin/httpd.jar -p 80 -r $(pwd)/static

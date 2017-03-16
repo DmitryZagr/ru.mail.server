@@ -1,9 +1,11 @@
 version: '2'
 services:
   web_netty_server:
-    build: .
-    image: "netty:latest"
+    build: 
+          args:
+               home_dir: /home/mail
+          context: .
     ports:
-     - "8080:80"
+          - "8080:80"
     volumes:
-     - ./static/http-test-suite:/home/1C_corp/static
+          - ./static/http-test-suite:/home/mail/static
