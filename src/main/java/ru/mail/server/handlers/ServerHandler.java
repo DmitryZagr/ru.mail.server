@@ -1,18 +1,13 @@
 package ru.mail.server.handlers;
 
-import java.io.File;
 import java.io.FileInputStream;
 
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.DefaultFileRegion;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.stream.ChunkedNioFile;
-import io.netty.handler.stream.ChunkedStream;
-import ru.mail.server.util.HttpHeaders;
 import ru.mail.server.util.HttpRequest;
 import ru.mail.server.util.HttpResponse;
 

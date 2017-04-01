@@ -10,7 +10,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.util.concurrent.DefaultEventExecutorGroup;
 import io.netty.util.concurrent.EventExecutorGroup;
-import ru.mail.server.handlers.HttpParaserHandler;
+import ru.mail.server.handlers.HttpParserHandler;
 import ru.mail.server.handlers.ServerHandler;
 
 import java.util.HashMap;
@@ -85,21 +85,22 @@ public class NettyServer {
 		// 1. define a separate thread pool to execute handlers with
 		// slow business logic. e.g database operation
 		// ===========================================================
-		final EventExecutorGroup group = new DefaultEventExecutorGroup(this.countOfThreads);
+		final EventExecutorGroup groupServerHandler = new DefaultEventExecutorGroup(this.countOfThreads);
+		final EventExecutorGroup groupStringDecoder = new DefaultEventExecutorGroup(this.countOfThreads);
+		final EventExecutorGroup groupHttpParser = new DefaultEventExecutorGroup(this.countOfThreads);
 
 		bootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
 			@Override
 			protected void initChannel(SocketChannel ch) throws Exception {
 				ChannelPipeline pipeline = ch.pipeline();
-				pipeline.addLast("stringDecoder", new StringDecoder());
-				pipeline.addLast("httpParaser", new HttpParaserHandler());
-				// pipeline.addLast("stringEncoder", new StringEncoder());
+				pipeline.addLast(groupStringDecoder, "stringDecoder", new StringDecoder());
+				pipeline.addLast(groupHttpParser, "httpParaser", new HttpParserHandler());
 
 				// ===========================================================
 				// 2. run handler with slow business logic
 				// in separate thread from I/O thread
 				// ===========================================================
-				pipeline.addLast(group, "serverHandler", new ServerHandler());
+				pipeline.addLast(groupServerHandler, "serverHandler", new ServerHandler());
 			}
 		});
 
