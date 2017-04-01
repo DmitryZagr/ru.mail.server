@@ -8,8 +8,10 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.DefaultFileRegion;
 import io.netty.channel.SimpleChannelInboundHandler;
+import ru.mail.server.cache.ServerMemoryCache;
 import ru.mail.server.util.HttpRequest;
 import ru.mail.server.util.HttpResponse;
+import ru.mail.server.util.WriteHttpResponse;
 
 public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
@@ -23,23 +25,15 @@ public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, HttpRequest request) throws Exception {
 
+		ServerMemoryCache cache = ServerMemoryCache.getInstance();
+
+//		if(cache.get(request.getOriginalHttpRequest()) == null) {
+//
+//		}
+
 		HttpResponse httpResponse = new HttpResponse.HttpResponseBuilder().httpRequest(request).build();
 
-		String h = httpResponse.getHttpHeaders().getHttpHeaders().toString();
 
-
-		ctx.write(Unpooled.copiedBuffer(h.getBytes()));
-
-		final FileInputStream is = httpResponse.getFileInputStream();
-		if (is != null && !httpResponse.getMethodName().equals("HEAD")) {
-			ChannelFuture future;
-			future = ctx.writeAndFlush(new DefaultFileRegion(is.getChannel(), 0, httpResponse.getFileLenght()));
-
-			future.addListener(ChannelFutureListener.CLOSE);
-//			ctx.close();
-		} else {
-			ctx.flush();
-			ctx.close();
-		}
+		WriteHttpResponse.write(ctx, httpResponse);
 	}
 }

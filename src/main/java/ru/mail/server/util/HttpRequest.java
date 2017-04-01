@@ -6,6 +6,7 @@ import java.net.URLDecoder;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import ru.mail.server.cache.ServerMemoryCache;
 import ru.mail.server.util.HttpUtil.Method;
 
 public class HttpRequest {
@@ -14,6 +15,7 @@ public class HttpRequest {
 	private String httpVersion;
 	private String fileExtension;
 	private boolean isValid;
+	private String originalHttpRequest;
 
 	public static class HttpRequestBuilder {
 
@@ -25,8 +27,16 @@ public class HttpRequest {
 
 		public HttpRequest build(String http) {
 
-			parseHttp(http);
 			HttpRequest httpReq = new HttpRequest();
+			httpReq.originalHttpRequest = http;
+
+//			ServerMemoryCache cache = ServerMemoryCache.getInstance();
+//
+//			if(cache.get(http) != null) {
+//				return httpReq;
+//			}
+
+			parseHttp(http);
 			httpReq.setFileExtension(fileExtension);
 			httpReq.setHttpVersion(httpVersion);
 			httpReq.setMethodName(methodName);
@@ -124,6 +134,10 @@ public class HttpRequest {
 
 	public void setValid(boolean isValid) {
 		this.isValid = isValid;
+	}
+
+	public final String getOriginalHttpRequest() {
+		return this.originalHttpRequest;
 	}
 
 }
