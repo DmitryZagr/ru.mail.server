@@ -21,7 +21,7 @@ $ java -jar <path to jar> -p <port> -c <threads> -r <document_root>
 
 #### Building NettyServer From Source
 To compile NettyServer from source, you need a Java compiler supporting Java 1.8 and JAVA_HOME pointing to this JDK.
-You can compile EqualizerFX with [Maven](https://maven.apache.org/index.html).
+You can compile NettyServer with [Maven](https://maven.apache.org/index.html).
 
 ```sh
 $ git clone https://github.com/DmitryZagr/ru.mail.server.git
@@ -33,5 +33,5 @@ $ java -jar httpd -p <port> -c <threads> -r <document_root>
   - In docker-compose.yml file  specify the host-port and folder with static files.
   - Running
  ```sh
-$ docker-compose up
+$ docker-compose up --build
 ```
