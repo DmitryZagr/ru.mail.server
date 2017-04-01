@@ -1,13 +1,25 @@
 package ru.mail.file;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
 
 public class IOUtil {
 
-	public static  File getFile(String documentRoot, String childPath) {
+	public static final int ONE_MB = 8 * 1024 * 1204;
+
+	public static File getFile(String documentRoot, String childPath) {
 		return new File(documentRoot + childPath);
 	}
 
+	public static byte[] converInputStreamToByteArray(InputStream inputStream) {
+		try {
+			return IOUtils.toByteArray(inputStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

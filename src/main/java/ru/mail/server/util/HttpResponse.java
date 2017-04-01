@@ -67,8 +67,8 @@ public class HttpResponse {
 
 		file = IOUtil.getFile(NettyServer.getServerConfigByName("NettyServer").getRootDir(), childPath);
 
-		if (!file.exists() ) {
-			if(childPath.contains(INDEX)) {
+		if (!file.exists()) {
+			if (childPath.contains(INDEX)) {
 				forbidden();
 				return null;
 			}
@@ -81,7 +81,6 @@ public class HttpResponse {
 			fileLenght = file.length();
 			OK();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fis = null;
 		}

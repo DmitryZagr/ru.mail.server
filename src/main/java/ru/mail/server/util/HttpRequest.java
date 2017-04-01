@@ -28,13 +28,8 @@ public class HttpRequest {
 		public HttpRequest build(String http) {
 
 			HttpRequest httpReq = new HttpRequest();
-			httpReq.originalHttpRequestHash = http.hashCode();
 
 			ServerMemoryCache cache = ServerMemoryCache.getInstance();
-
-			if(cache.get(http.hashCode()) != null) {
-				return httpReq;
-			}
 
 			parseHttp(http);
 			httpReq.setFileExtension(fileExtension);
@@ -42,6 +37,13 @@ public class HttpRequest {
 			httpReq.setMethodName(methodName);
 			httpReq.setPath(path);
 			httpReq.setValid(isValid);
+
+			long hash = httpReq.toString().hashCode();
+			httpReq.originalHttpRequestHash = hash;
+
+			if (cache.get(hash) != null) {
+				return httpReq;
+			}
 
 			return httpReq;
 		}
@@ -95,7 +97,6 @@ public class HttpRequest {
 		}
 	}
 
-
 	public String getMethodName() {
 		return methodName;
 	}
@@ -136,8 +137,17 @@ public class HttpRequest {
 		this.isValid = isValid;
 	}
 
-	public final long getOriginalHttpRequest() {
+	public final long getHttpRequestHash() {
 		return this.originalHttpRequestHash;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder string = new StringBuilder(1024);
+		string.append("HttpRequest [methodName=").append(methodName).append(", path=").append(path)
+				.append(", httpVersion=").append(httpVersion).append(", fileExtension=").append(fileExtension)
+				.append(", isValid=").append(isValid).append("]");
+		return string.toString();
 	}
 
 }
