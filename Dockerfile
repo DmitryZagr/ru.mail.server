@@ -2,10 +2,10 @@ FROM lwieske/java-8:latest
 
 ARG home_dir=/home/mail
 
-RUN mkdir ${home_dir}
+RUN mkdir -p ${home_dir}
 WORKDIR ${home_dir}
 
-RUN mkdir ${home_dir}/static
+RUN mkdir -p ${home_dir}/static
 ADD . ${home_dir}
 
 RUN apk update && \ 

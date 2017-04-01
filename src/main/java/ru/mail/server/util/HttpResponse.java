@@ -65,11 +65,7 @@ public class HttpResponse {
 			e1.printStackTrace();
 		}
 
-
-		IOUtil ioutil = new IOUtil(NettyServer.getServerConfigByName("NettyServer").getRootDir(), childPath);
-
-		file = ioutil.getFile();
-
+		file = IOUtil.getFile(NettyServer.getServerConfigByName("NettyServer").getRootDir(), childPath);
 
 		if (!file.exists() ) {
 			if(childPath.contains(INDEX)) {
