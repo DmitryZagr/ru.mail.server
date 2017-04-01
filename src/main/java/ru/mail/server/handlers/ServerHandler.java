@@ -1,12 +1,6 @@
 package ru.mail.server.handlers;
 
-import java.io.FileInputStream;
-
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.DefaultFileRegion;
 import io.netty.channel.SimpleChannelInboundHandler;
 import ru.mail.server.cache.ServerMemoryCache;
 import ru.mail.server.util.HttpRequest;
@@ -27,12 +21,16 @@ public class ServerHandler extends SimpleChannelInboundHandler<HttpRequest> {
 
 		ServerMemoryCache cache = ServerMemoryCache.getInstance();
 
-//		if(cache.get(request.getOriginalHttpRequest()) == null) {
-//
-//		}
+		if (cache.get(request.getOriginalHttpRequest()) != null) {
+			WriteHttpResponse.write(ctx, (HttpResponse) cache.get(request.getOriginalHttpRequest()));
+			return;
+		}
 
 		HttpResponse httpResponse = new HttpResponse.HttpResponseBuilder().httpRequest(request).build();
 
+		if (cache.get(request.getOriginalHttpRequest()) == null && httpResponse.getFileInputStream() == null) {
+			cache.put(request.getOriginalHttpRequest(), httpResponse);
+		}
 
 		WriteHttpResponse.write(ctx, httpResponse);
 	}

@@ -8,14 +8,14 @@ import com.google.common.cache.CacheBuilder;
 public class ServerMemoryCache {
 
 	private static final ServerMemoryCache instance = createCache(10000, 10, 1000000);
-	private Cache<String, Object> cache;
+	private Cache<Long, Object> cache;
 
-    public Object get(String key) {
-        return cache.getIfPresent(key);
+    public Object get(long keyHash) {
+        return cache.getIfPresent(keyHash);
     }
 
-    public void put(String key, Object obj) {
-        cache.put(key, obj);
+    public void put(long keyHash, Object obj) {
+        cache.put(keyHash, obj);
     }
 
     public static ServerMemoryCache getInstance() {

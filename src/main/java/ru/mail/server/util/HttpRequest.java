@@ -15,7 +15,7 @@ public class HttpRequest {
 	private String httpVersion;
 	private String fileExtension;
 	private boolean isValid;
-	private String originalHttpRequest;
+	private long originalHttpRequestHash;
 
 	public static class HttpRequestBuilder {
 
@@ -28,13 +28,13 @@ public class HttpRequest {
 		public HttpRequest build(String http) {
 
 			HttpRequest httpReq = new HttpRequest();
-			httpReq.originalHttpRequest = http;
+			httpReq.originalHttpRequestHash = http.hashCode();
 
-//			ServerMemoryCache cache = ServerMemoryCache.getInstance();
-//
-//			if(cache.get(http) != null) {
-//				return httpReq;
-//			}
+			ServerMemoryCache cache = ServerMemoryCache.getInstance();
+
+			if(cache.get(http.hashCode()) != null) {
+				return httpReq;
+			}
 
 			parseHttp(http);
 			httpReq.setFileExtension(fileExtension);
@@ -136,8 +136,8 @@ public class HttpRequest {
 		this.isValid = isValid;
 	}
 
-	public final String getOriginalHttpRequest() {
-		return this.originalHttpRequest;
+	public final long getOriginalHttpRequest() {
+		return this.originalHttpRequestHash;
 	}
 
 }
