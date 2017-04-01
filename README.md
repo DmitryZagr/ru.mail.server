@@ -30,11 +30,6 @@ $ make
 $ java -jar httpd -p <port> -c <threads> -r <document_root>
 ```
 #### Running in Docker
-
-   - Build with make.
-```sh
-$ make
-```
   - In docker-compose.yml file  specify the host-port and folder with static files.
   - Running
  ```sh
