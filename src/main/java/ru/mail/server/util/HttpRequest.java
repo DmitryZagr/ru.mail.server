@@ -29,8 +29,6 @@ public class HttpRequest {
 
 			HttpRequest httpReq = new HttpRequest();
 
-			ServerMemoryCache cache = ServerMemoryCache.getInstance();
-
 			parseHttp(http);
 			httpReq.setFileExtension(fileExtension);
 			httpReq.setHttpVersion(httpVersion);
@@ -40,10 +38,6 @@ public class HttpRequest {
 
 			long hash = httpReq.toString().hashCode();
 			httpReq.originalHttpRequestHash = hash;
-
-			if (cache.get(hash) != null) {
-				return httpReq;
-			}
 
 			return httpReq;
 		}

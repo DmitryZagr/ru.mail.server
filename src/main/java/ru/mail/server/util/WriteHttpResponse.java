@@ -2,7 +2,6 @@ package ru.mail.server.util;
 
 import java.io.FileInputStream;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import io.netty.buffer.Unpooled;
