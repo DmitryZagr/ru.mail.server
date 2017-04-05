@@ -18,7 +18,7 @@ public class HttpResponse {
 	private FileInputStream fis;
 	private long fileLenght;
 	private String method;
-	File file;
+	private File file;
 
 	public static class HttpResponseBuilder {
 		private HttpRequest request;

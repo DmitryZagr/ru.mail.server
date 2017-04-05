@@ -57,8 +57,8 @@ public class WriteHttpResponse {
 			byte[] headers = httpResponse.getHttpHeaders().getHttpHeaders().toString().getBytes();
 
 			if (httpResponse.getFileInputStream() != null && !httpResponse.getMethodName().equals("HEAD")) {
-				byte[] file = IOUtil.converInputStreamToByteArray(httpResponse.getFileInputStream());
 				if (httpResponse.getFile().length() - headers.length <= IOUtil.ONE_MB) {
+					byte[] file = IOUtil.converInputStreamToByteArray(httpResponse.getFileInputStream());
 					response = new Byte[headers.length + file.length];
 					for (byte b : headers)
 						response[i++] = b;
